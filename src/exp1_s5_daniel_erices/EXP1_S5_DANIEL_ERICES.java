@@ -31,17 +31,25 @@ static double cantA = 0.15; // si tiene mas de 65
         System.out.println("   Bienvendio al teatro Moro");
         System.out.println("El valor de la entrada es de $10.000");
         System.out.println("********************************");
-        Scanner usuario = new Scanner(System.in);
+        System.out.println("********************************");
+        System.out.println(":::::::Descuentos::::::");
+        System.out.println("Por la compra de 2 hasta 5 entrada, tienes un 10% de descuento en el total de la compra");
+        System.out.println("Por la compra de 6 o mas entradas, tienes un 15% de descuenton el total de la compra");
+        System.out.println("Por ser estudiante tienes un 10% de descuento en el total de la compra");
+        System.out.println("Por tener 65 o mas años, tienes un 15% de descuento en el total de la compra");
+        System.out.println("********************************");
+        
        
         //inicio del menu
         while (!salir){
+            Scanner usuario = new Scanner(System.in);
             //opciones del menu y su selección
             System.out.println("\n********************************");
             System.out.println("Seleccione alguna de las siguientes opciones: ");
             System.out.println("1.- Comprar entradas");
             System.out.println("2.- Revisar disponibilidad de asientos");
             System.out.println("3.- Eliminar reserva");
-            System.out.println("4.- Revisar promociones");
+            System.out.println("4.- Buscador de reservas");
             System.out.println("5.- Salir de la aplicacion");
             System.out.print("Ingrese la opcion: ");
             String eleccion = usuario.nextLine().trim();
@@ -133,14 +141,16 @@ static double cantA = 0.15; // si tiene mas de 65
                                 }                                                                     
                         while (ftemporal[asiento] == true){
                             System.out.println("Este asiento ya esta reservado. Ingrese otro numero de asiento para la fila " + fila + " asiento " + (asiento + 1));
-                            while(usuario.hasNextInt()){
+                            while(!usuario.hasNextInt()){
                                 System.out.println("Debe ingresar un valor entre el 1 y el 10");
                                 usuario.next();
                             }
                             asiento = usuario.nextInt() - 1;
+                            usuario.nextLine();
                             while(asiento < 1 | asiento > 10){
                                 System.out.println("Debe ingresar un valor entre el 1 y el 10: ");
                                 asiento = usuario.nextInt() - 1;
+                                usuario.nextLine();
                             }
                             if (fila.matches("A")){ftemporal = fila1;
                             }else if (fila.matches("B")) {ftemporal = fila2;
@@ -176,7 +186,7 @@ static double cantA = 0.15; // si tiene mas de 65
                         System.out.println("El descuento es de un 10% por ser estudiante, un 15% por ser adulto mayor y 15% por comprar 6 o mas entradas");
                         System.out.println("El total a pagar es de: " + resultado);
                         System.out.println("********************************\n");
-                    }else if (edad1 >= 65 && estudiante.matches("S") && entradas1 < 5){
+                    }else if (edad1 >= 65 && estudiante.matches("S") && entradas1 < 5 && entradas1 >= 2){
                         valor = (precioEntrada - (precioEntrada * cantA) - (precioEntrada * cantE) - (precioEntrada * cant1));
                         valorf = valor * entradas1;
                         System.out.println(valorf);
@@ -200,7 +210,7 @@ static double cantA = 0.15; // si tiene mas de 65
                         System.out.println("El descuento es de un 15% por ser adulto mayor y 15% por comprar 6 o mas entradas");
                         System.out.println("El total a pagar es de: " + resultado);
                         System.out.println("********************************\n");
-                    }else if(edad1 >= 65 && estudiante.matches("N") && entradas1 < 5){
+                    }else if(edad1 >= 65 && estudiante.matches("N") && entradas1 < 5 && entradas1 >= 2){
                         valor = (precioEntrada - (precioEntrada * cantA) - (precioEntrada * cant1));
                         valorf = valor * entradas1;
                         System.out.println(valorf);
@@ -224,7 +234,7 @@ static double cantA = 0.15; // si tiene mas de 65
                         System.out.println("El descuento es de un 10% por ser estudiante y 15% por comprar 6 o mas entradas");
                         System.out.println("El total a pagar es de: " + resultado);
                         System.out.println("********************************\n");
-                    }else if (edad1 < 65 && estudiante.matches("S") && entradas1 < 5){
+                    }else if (edad1 < 65 && estudiante.matches("S") && entradas1 < 5 &&  entradas1 >= 2){
                         valor = (precioEntrada - (precioEntrada * cantE) - (precioEntrada * cant1));
                         valorf = valor * entradas1;
                         System.out.println(valorf);
@@ -381,6 +391,7 @@ static double cantA = 0.15; // si tiene mas de 65
                                while(asientoE < 1 | asientoE >10){
                                    System.out.println("Debe ingresar un valor entre 1 y 10");
                                    asientoE = usuario.nextInt();
+                                   usuario.nextLine();
                                }
                                
                                boolean[] ftemp = null;//variable auxiliar
@@ -402,14 +413,22 @@ static double cantA = 0.15; // si tiene mas de 65
                                }
                                //se comprueba de que si el asiento esta vacio o no 
                                while(ftemp[asiE] == false){
+                                   System.out.println("********************************");
                                    System.out.println("El asiento no se encuentra reservado");
+                                   System.out.println("********************************");
                                    asiE = usuario.nextInt();
+                                   usuario.nextLine();
                                    while(!usuario.hasNextInt()){
+                                       System.out.println("********************************");
                                        System.out.println("Debe ingresar un valor entre 1 y 10");
+                                       System.out.println("********************************");
                                        usuario.next();
                                    }while(asiE < 1 | asiE > 10){
+                                       System.out.println("********************************");
                                        System.out.println("Debe ingresar un valor entre 1 y 10");
+                                       System.out.println("********************************");
                                        asiE = usuario.nextInt() - 1;
+                                       usuario.nextLine();
                                    }
                                    if (filaE.matches("A")){ftemp = fila1;
                                    }else if (filaE.matches("B")) {ftemp = fila2;
@@ -432,7 +451,9 @@ static double cantA = 0.15; // si tiene mas de 65
                                    ftemp[asiE] = false;
                                }
                            }
+                           System.out.println("********************************");
                            System.out.println("La reserva fue eliminada");
+                           System.out.println("********************************");
                            }
                            case 2 ->{
                                 int fila = -1;
@@ -459,11 +480,11 @@ static double cantA = 0.15; // si tiene mas de 65
                         }
                         fila = 0;
                     }
-                    System.out.println("\n********************************");
+                    System.out.println("********************************");
                 
                            }
                            case 3 ->{
-                               System.out.println("\n********************************");
+                               System.out.println("********************************");
                                System.out.println("Usted volvera al menu principal");
                                System.out.println("********************************");
                                volver = true;   
@@ -474,14 +495,57 @@ static double cantA = 0.15; // si tiene mas de 65
 
                 }
                 case 4 ->{
-                    //revisar promociones
                     System.out.println("********************************");
-                    System.out.println("Por la compra de 2 hasta 5 entrada, tienes un 10% de descuento en el total de la compra");
-                    System.out.println("Por la compra de 6 o mas entradas, tienes un 15% de descuenton el total de la compra");
-                    System.out.println("Por ser estudiante tienes un 10% de descuento en el total de la compra");
-                    System.out.println("Por tener 65 o mas años, tienes un 15% de descuento en el total de la compra");
-                    System.out.println("********************************");
-                }
+                    System.out.println("Buscador de reservas");
+                    System.out.print("Ingrese la fila (A, B, C o D): ");
+                    String buscarE = usuario.nextLine().toUpperCase().trim();
+
+                    while (!buscarE.matches("[A-D]")) {
+                        System.out.println("Debe ingresar un valor entre A - B - C o D");
+                        buscarE = usuario.nextLine().toUpperCase().trim();
+                    }
+
+                    System.out.print("Ingrese el número de asiento (1 al 10) en la fila " + buscarE + ": ");
+                    while (!usuario.hasNextInt()) {
+                        System.out.println("Debe ingresar un valor entre 1 y 10");
+                        usuario.next();
+                    }
+
+                    int buscarA = usuario.nextInt();
+                    usuario.nextLine(); 
+
+                    while (buscarA < 1 || buscarA > 10) {
+                        System.out.println("Debe ingresar un valor entre 1 y 10");
+                        buscarA = usuario.nextInt();
+                        usuario.nextLine(); 
+                    }
+
+                    // Selecciona la fila correspondiente
+                    boolean[] ftemp = switch (buscarE) {
+                    case "A" -> fila1;
+                    case "B" -> fila2;
+                    case "C" -> fila3;
+                    case "D" -> fila4;
+                    default -> null;
+                         };
+
+                    // Verificamos estado del asiento
+                    if (ftemp != null) {
+                    boolean estado = ftemp[buscarA - 1];
+                    if (estado) {
+                        System.out.println("********************************");
+                        System.out.println("La funcion para las 20:00 hrs de Chungking Express");
+                        System.out.println("El asiento " + buscarA + " en la fila " + buscarE + " está **RESERVADO**.");
+                        System.out.println("********************************");
+                    } else {
+                        System.out.println("********************************");
+                        System.out.println("La funcion para las 20:00 hrs de Chungking Express");
+                        System.out.println("El asiento " + buscarA + " en la fila " + buscarE + " está **DISPONIBLE**.");
+                        System.out.println("********************************");
+                     }
+                            }
+
+                }        
                 case 5 ->{
                     //Cierre del sistema
                     System.out.println("Muchas gracias por su compra");
